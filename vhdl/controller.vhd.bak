@@ -1,0 +1,373 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- entity def
+entity controller is 
+    -- port interface
+	port (
+		clk : in std_logic;
+		rst : in std_logic;
+		ir_31 : in std_logic_vector(5 downto 0);
+		ir_20 : in std_logic_vector(4 downto 0);
+		ir_15 : in std_logic_vector(15 downto 0);
+        multiplied: in std_logic;
+		pcwritecond : out std_logic;
+		pcwrite : out std_logic;
+		iord : out std_logic;
+		memwrite : out std_logic;
+		memtoreg : out std_logic;
+		irwrite : out std_logic;
+		jumpandlink : out std_logic;
+		is_signed : out std_logic;
+		pcsource : out std_logic_vector(1 downto 0);
+		alu_opcode : out std_logic_vector(5 downto 0);
+		alusrc_a : out std_logic;
+		alusrc_b : out std_logic_vector(1 downto 0);
+		regwrite : out std_logic;
+		regdst : out std_logic
+	);
+end controller;
+
+-- architectural implementation
+architecture bhv of controller is
+    -- Define Constants for instructions
+
+    -- I-Type Instructions (Opcode Field - 6 bits)
+    constant ADDIU    : std_logic_vector(5 downto 0) := "001001"; -- X"09"
+    constant ANDI : std_logic_vector(5 downto 0) := "001100"; -- X"0C"
+    constant ORI  : std_logic_vector(5 downto 0) := "001101"; -- X"0D"
+    constant XORI : std_logic_vector(5 downto 0) := "001110"; -- X"0E"
+    constant SLTSI   : std_logic_vector(5 downto 0) := "001010"; -- X"0A"
+    constant SLTUI   : std_logic_vector(5 downto 0) := "001011"; -- X"0B"
+
+    -- R-Type Instructions (funct field - 6 bits)
+    constant BYPASS : std_logic_vector(5 downto 0) := "110000"; -- X"30" -- custom
+    constant ADD    : std_logic_vector(5 downto 0) := "100001"; -- X"21"
+    constant SUB    : std_logic_vector(5 downto 0) := "100011"; -- X"23"
+    constant MULT   : std_logic_vector(5 downto 0) := "011000"; -- X"18"
+    constant MULTU  : std_logic_vector(5 downto 0) := "011001"; -- X"19"
+    constant AND_OP : std_logic_vector(5 downto 0) := "100100"; -- X"24"
+    constant OR_OP  : std_logic_vector(5 downto 0) := "100101"; -- X"25"
+    constant XOR_OP : std_logic_vector(5 downto 0) := "100110"; -- X"26"
+    constant SLL_OP    : std_logic_vector(5 downto 0) := "000000"; -- X"00"
+    constant SRL_OP    : std_logic_vector(5 downto 0) := "000010"; -- X"02"
+    constant SRA_OP    : std_logic_vector(5 downto 0) := "000011"; -- X"03"
+    constant SLTS    : std_logic_vector(5 downto 0) := "101010"; -- X"2A"
+    constant SLTU   : std_logic_vector(5 downto 0) := "101011"; -- X"2B"
+    constant MFHI   : std_logic_vector(5 downto 0) := "010000"; -- X"10"
+    constant MFLO   : std_logic_vector(5 downto 0) := "010010"; -- X"12"
+    constant JR     : std_logic_vector(5 downto 0) := "001000"; -- X"08"
+    constant BEQ    : std_logic_vector(5 downto 0) := "000100"; -- X"04"
+    constant BNE    : std_logic_vector(5 downto 0) := "000101"; -- X"05"
+    constant BLEZ   : std_logic_vector(5 downto 0) := "000110"; -- X"06"
+    constant BGTZ   : std_logic_vector(5 downto 0) := "000111"; -- X"07"
+    constant BLTZ   : std_logic_vector(5 downto 0) := "000001"; -- X"01"
+    constant BGEZ   : std_logic_vector(5 downto 0) := "001111"; -- X"0F" 
+
+    -- Load/Store Instructions (opcodes)
+    constant LW      : std_logic_vector(5 downto 0) := "100011"; -- X"23"
+    constant SW      : std_logic_vector(5 downto 0) := "101011"; -- X"2B"
+
+    -- Jump Instructions (opcodes)
+    constant JA   : std_logic_vector(5 downto 0) := "000010"; -- X"02"
+    constant JL   : std_logic_vector(5 downto 0) := "000011"; -- X"03"
+    constant MOVE : std_logic_vector(5 downto 0) := "111000"; -- X"38" custom
+    constant BRANCH   : std_logic_vector(5 downto 0) := "111001"; -- X"39" custom
+
+    -- R TYPE OPCODE
+    constant R_TYPE : std_logic_vector(5 downto 0) := "000000";
+
+    -- Define States for 2 Process FSM
+
+    -- Following the typical fetch, decode, execute, mem, wb convetion for naming and creating states
+    type state_type is (IF_INIT, IF_FETCH, IF_DELAY, ID_DECODE, EX_REG, WB_REG, 
+    EX_LS, MEM_LW, WB_LW, MEM_LW_DELAY, MEM_SW, MEM_SW_DELAY, 
+    EX_IMM, WB_IMM, EX_JUMP, EX_JR, EX_JAL, WB_JAL, EX_J, 
+    EX_BRANCH, EX_BRANCH_COND, ID_UNRECOGNIZED, ID_HALT);
+
+    -- Define state signals
+    signal state, next_state : state_type;
+
+begin
+
+    -- 1st Sequential Process in a 2 Process FSM handles stage changes on clock edge
+    process(clk, rst)
+        begin
+            -- Check for rst
+            if (rst = '1') then
+                -- move to initial state
+                state <= IF_INIT;
+            elsif rising_edge(clk) then 
+                -- Transition to next state
+                state <= next_state;
+            end if;
+    end process;
+
+    -- 2nd Combination Process to Dictate State Changes
+    process(state, ir_20, ir_31, ir_15, multiplied) -- use state, opcode, and destination, and funct
+        begin
+            -- Set Defaults to prevent latches
+            pcwritecond <= '0';
+            pcwrite <= '0';
+            iord <= '0';
+            memwrite <= '0';
+            memtoreg <= '0';
+            irwrite <= '0';
+            jumpandlink <= '0';
+            is_signed <= '0';
+            pcsource <= "00";
+            alu_opcode <= ADD;
+            alusrc_a <= '0';
+            alusrc_b <= "00";
+            regwrite <= '0';
+            regdst <= '0';
+            next_state <= state;
+            branch_op_comb := (others => '0');
+
+            -- Determine the branch op code for branch instructions
+            if (state = ID_DECODE or state = EX_BRANCH or state = EX_BRANCH_COND) then
+                if ir_31 = BEQ then
+                    branch_op_comb := BEQ;
+                elsif ir_31 = BNE then
+                    branch_op_comb := BNE;
+                elsif ir_31 = BLEZ then
+                    branch_op_comb := BLEZ;
+                elsif ir_31 = BGTZ then
+                    branch_op_comb := BGTZ;
+                elsif ir_31 = "000001" then
+                    if ir_20 = "00000" then
+                        branch_op_comb := BLTZ;
+                    elsif ir_20 = "00001" then
+                        branch_op_comb := BGEZ;
+                    end if;
+                end if;
+            end if;
+
+            -- Begin case statement to evaluate state and all state changes
+            case state is
+                when ID_HALT => 
+                    -- Halt instruction, transition to decode
+                    -- custom, gonna enounter this in the mifs
+                    next_state <= ID_DECODE;
+            
+                when ID_UNRECOGNIZED =>
+                    -- Handle unrecognized instructions
+                    next_state <= IF_INIT;
+
+                -- Initial fetch
+                when IF_INIT => 
+                    iord <= '0';
+                    next_state <= IF_DELAY;
+            
+                -- Account from delay from memory
+                when IF_DELAY =>
+                    next_state <= IF_FETCH;
+                    
+                -- Reading instrucion from IR
+                when IF_FETCH =>
+                    alusrc_a <= '0';
+                    alusrc_b <= "01";
+                    pcwrite <= '1';
+                    irwrite <= '1';
+                    -- Add to PC
+                    alu_opcode <= ADD;
+                    next_state <= ID_DECODE;
+
+                -- Decode the read instruction
+                when ID_DECODE =>
+                    case ir_31 is
+                        -- Read opcode from controler
+                        when R_TYPE => -- R-type instructions
+                            -- opcode remains the same
+                            alu_opcode <= R_TYPE;
+                            if ir_15(5 downto 0) = JR then
+                                next_state <= EX_JR; -- Jump register
+                            else
+                                next_state <= EX_REG; -- Other R-type (ADD, SUB, etc.)
+                            end if;
+                        when LW => -- Load word
+                            next_state <= EX_LS;
+                        when SW => -- Store word
+                            next_state <= EX_LS;
+                        when ADDIU => -- Add immediate unsigned
+                            next_state <= EX_IMM;
+                        when ANDI => -- And immediate
+                            next_state <= EX_IMM;
+                        when ORI => -- Or immediate
+                            next_state <= EX_IMM;
+                        when XORI => -- XOR immediate
+                            next_state <= EX_IMM;
+                        when SLTSI => -- Set less than immediate
+                            next_state <= EX_IMM;
+                        when SLTUI => -- Set less than immediate unsigned
+                            next_state <= EX_IMM;
+                        when JA => -- Jump
+                            next_state <= EX_JUMP;
+                        when JL => -- Jump and link
+                            next_state <= EX_JUMP;
+                        when BEQ => -- Branch equal
+                            next_state <= EX_BRANCH;
+                        when BNE => -- Branch not equal
+                            next_state <= EX_BRANCH;
+                        when BLEZ => -- Branch less than or equal zero
+                            next_state <= EX_BRANCH;
+                        when BGTZ => -- Branch greater than zero
+                            next_state <= EX_BRANCH;
+                        when "000001" => -- BLTZ or BGEZ (distinguished by ir_20)
+                            next_state <= EX_BRANCH;
+                        when others =>
+                            next_state <= ID_UNRECOGNIZED; -- Unrecognized instruction
+                    end case;
+
+                -- Executing R type ALU ops
+                when EX_REG =>
+                    alu_opcode <= ir_15(5 downto 0);
+                    alusrc_a <= '1';
+                    alusrc_b <= "00";
+                    if multiplied = '1' then 
+                        regdst <= '1';
+                        regwrite <= '1'; -- Write result for MULT/MULTU
+                    end if;
+                    -- write basck data
+                    next_state <= WB_REG;
+
+                -- Write back r type instruction to reg file
+                when WB_REG =>
+                    regwrite <= '1';
+                    alu_opcode <= BYPASS;
+                    regdst <= '1';
+                    next_state <= IF_INIT;
+                 
+
+                -- Compute memory address for load/store
+                when EX_LS =>
+                    alusrc_b <= "10";
+                    alu_opcode <= ADD;
+                    is_signed <= '0';
+                    alusrc_a <= '1';
+                    -- check opcode to see if we loading or storing fr
+                    if ir_31 = LW then 
+                        next_state <= MEM_LW;
+                    else 
+                        next_state <= MEM_SW;
+                    end if;
+                
+                -- Read memory for load word
+                when MEM_LW =>
+                    iord <= '1';
+                    -- Check if its inport or outport
+                    -- inport or outport only have a 1 cycle delay as opposed to da ram
+                    if (ir_15 = x"FFFC") or (ir_15 = x"FFF8") then 
+                        next_state <= WB_LW; -- Special addresses skip delay
+                    else 
+                        next_state <= MEM_LW_DELAY;
+                    end if;
+                    
+                -- accound for ram ip and memory delay (2 cycle)
+                when MEM_LW_DELAY =>
+                    -- Delay cycle for load memory access
+                    next_state <= WB_LW;
+                    
+                -- Write back loaded data to register file
+                when WB_LW =>
+                    -- execute wb after delay has passed
+                    memtoreg <= '1';
+                    regwrite <= '1';
+                    -- prepare for next instruction
+                    next_state <= IF_INIT;
+                    
+                -- Write to memory for store word
+                when MEM_SW =>
+                    iord <= '1';
+                    memwrite <= '1';
+                    -- again account for delay
+                    next_state <= MEM_SW_DELAY;
+                
+                -- accound for ram ip and memory delay (2 cycle) (read/write)
+                when MEM_SW_DELAY =>
+                    -- Delay cycle for store completion
+                    next_state <= IF_INIT;
+
+                -- Execute immediate alu ops
+                when EX_IMM =>
+                    alusrc_a <= '1'; -- Use register rs
+                    alusrc_b <= "10"; -- Use sign-extended immediate
+                    alu_opcode <= ir_31; -- Pass opcode to alu_ctrl for mapping (logic alr handled there)
+                    if ir_31 = SLTSI then
+                        is_signed <= '1'; -- SLTSI requires signed immediate
+                    else
+                        is_signed <= '0'; -- Other immediates are unsigned
+                    end if;
+                    next_state <= WB_IMM; -- Write back result
+
+                -- Write back immediate instruction result to reg file
+                when WB_IMM =>
+                    regwrite <= '1';
+                    -- prepare for next instruction
+                    next_state <= IF_INIT;
+
+                -- handle branches
+
+                -- get branch address
+                when EX_BRANCH =>
+                    -- Compute branch target address
+                    is_signed <= '1';
+                    alusrc_b <= "11";
+                    alusrc_a <= '0';
+                    alu_opcode <= ADD;
+                    next_state <= EX_BRANCH_COND;
+
+                -- check branch using combinational signal created earlier
+                when EX_BRANCH_COND =>
+                    -- Evaluate branch condition (BEQ, BGEZ, etc.)
+                    -- pass to alu controller
+                    alu_opcode <= branch_op_comb;
+                    pcwritecond <= '1';
+                    pcsource <= "01";
+                    alusrc_a <= '1';
+                    alusrc_b <= "00";
+                    next_state <= IF_INIT;
+
+                -- jump instructions
+                
+                -- Executing a jal instruction
+                when EX_JUMP =>
+                    -- change addr
+                    pcsource <= "10";
+                    pcwrite <= '1';
+                    -- check opcode
+                    if ir_31 = JL then 
+                        next_state <= EX_JAL;
+                    else
+                        next_state <= IF_INIT;
+                    end if;
+
+                -- jr execution determined in initial decodex
+                when EX_JR =>
+                    -- Execute jump register (JR)
+                    alusrc_a <= '1';
+                    -- simply pass alu a
+                    pcwrite <= '1';
+                    next_state <= IF_INIT;
+                    alu_opcode <= MOVE;
+                    pcsource <= "00";
+                 
+                
+                when EX_JAL =>
+                    -- Execute jump and link (JAL), save return address
+                    pcwrite <= '1';
+                    regwrite <= '1';
+                    jumpandlink <= '1';
+                    next_state <= WB_JAL;
+                    alusrc_a <= '0';
+                    pcsource <= "10";
+                    alu_opcode <= MOVE;
+                    
+                
+                 -- Complete JAL write-back
+                when WB_JAL => 
+                    next_state <= IF_INIT;
+            end case;
+    end process;
+end bhv;

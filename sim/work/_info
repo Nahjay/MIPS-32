@@ -1,0 +1,629 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/20.1
+Ealu
+Z0 w1745097288
+Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 387
+Z4 dE:/Documents/School/EEL4712C/mips_project/sim
+Z5 8E:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd
+Z6 FE:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd
+l0
+L7 1
+Vo?ghK35igZcg>XIh4jJ^^3
+!s100 2BASNYZ3Va^nWlF`g]aJc3
+Z7 OV;C;2020.1;71
+32
+Z8 !s110 1745111026
+!i10b 1
+Z9 !s108 1745111026.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd|
+Z11 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abhv
+R1
+R2
+R3
+Z14 DEx4 work 3 alu 0 22 o?ghK35igZcg>XIh4jJ^^3
+!i122 387
+l96
+L49 169
+VeF`@okWJi:3Kb9b^CDJPb3
+!s100 ^`LMebE@cc]_McOE@bmY22
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Ealu_ctrl
+Z15 w1745094433
+R1
+R2
+R3
+!i122 388
+R4
+Z16 8E:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd
+Z17 FE:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd
+l0
+L6 1
+V[>QPO4C?4P5SYRo^JlHo12
+!s100 <eLSMPo4P<oVXcaV4BP7>2
+R7
+32
+R8
+!i10b 1
+R9
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd|
+Z19 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+Z20 DEx4 work 8 alu_ctrl 0 22 [>QPO4C?4P5SYRo^JlHo12
+!i122 388
+l71
+L20 107
+V?nhTQA5RV[3im^Q1]6DM;0
+!s100 aMfLeI[;TzMFFk2Ba3W7b2
+R7
+32
+R8
+!i10b 1
+R9
+R18
+R19
+!i113 1
+R12
+R13
+Econtroller
+Z21 w1745110985
+R1
+R2
+R3
+!i122 389
+R4
+Z22 8E:\Documents\School\EEL4712C\mips_project\vhdl\controller.vhd
+Z23 FE:\Documents\School\EEL4712C\mips_project\vhdl\controller.vhd
+l0
+L6 1
+Vnmd]G<z@_0MLDecjQV]3_0
+!s100 _VPIAcO5UQM[F;Pi7EHI93
+R7
+32
+Z24 !s110 1745111027
+!i10b 1
+Z25 !s108 1745111027.000000
+Z26 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:\Documents\School\EEL4712C\mips_project\vhdl\controller.vhd|
+Z27 !s107 E:\Documents\School\EEL4712C\mips_project\vhdl\controller.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+Z28 DEx4 work 10 controller 0 22 nmd]G<z@_0MLDecjQV]3_0
+!i122 389
+l109
+L32 371
+VV=0K[7_dB7fkc2;<BAK`H3
+!s100 Qen=;2C_<M>9EZcXn9SzI2
+R7
+32
+R24
+!i10b 1
+R25
+R26
+R27
+!i113 1
+R12
+R13
+Edatapath
+Z29 w1745097373
+R1
+R2
+R3
+!i122 390
+R4
+Z30 8E:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd
+Z31 FE:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd
+l0
+L6 1
+VPlJ=IkKEj>hXGdizckHSf3
+!s100 cNZQb>iOXB<J<aaPoN?<`2
+R7
+32
+R24
+!i10b 1
+R25
+Z32 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd|
+Z33 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd|
+!i113 1
+R12
+R13
+Astruct
+R14
+Z34 DEx4 work 6 mux4x1 0 22 k>B^o5L0b^lV74JK_i4Y]2
+Z35 DEx4 work 11 sign_extend 0 22 _4hR<g[[D;n41MP;YiLaG1
+R20
+Z36 DEx4 work 6 mux3x1 0 22 2cWCc8GeZFmOPI@BEmhhg3
+Z37 DEx4 work 13 register_file 0 22 IBSbXJ@UfK;@`Nz]I`Y>00
+Z38 DEx4 work 6 memory 0 22 `1Le@MfjfQ=LB3Je?U4YR3
+Z39 DEx4 work 6 mux2x1 0 22 bR<gK=UBHI_bMBHHJ3kUb1
+Z40 DEx4 work 3 reg 0 22 8SNH=i;GM[BSDUNkB@ch`1
+R1
+R2
+R3
+Z41 DEx4 work 8 datapath 0 22 PlJ=IkKEj>hXGdizckHSf3
+!i122 390
+l77
+L38 276
+V>i:00mWXkKi3RVf]SR2gS1
+!s100 faSMaOnQgd??Xjc?[L1KD3
+R7
+32
+R24
+!i10b 1
+R25
+R32
+R33
+!i113 1
+R12
+R13
+Ememory
+Z42 w1745084702
+R1
+R2
+R3
+!i122 391
+R4
+Z43 8E:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd
+Z44 FE:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd
+l0
+L6 1
+V`1Le@MfjfQ=LB3Je?U4YR3
+!s100 ^T@lC_dk4bA]UK=eBezcX2
+R7
+32
+R24
+!i10b 1
+R25
+Z45 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd|
+Z46 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd|
+!i113 1
+R12
+R13
+Astruct
+R40
+R36
+Z47 DPx9 altera_mf 20 altera_mf_components 0 22 BN6nPmY:UEbXa[^5b@FTW1
+Z48 DEx4 work 3 ram 0 22 U??GgDJKoW:>e<L1TiS<^1
+R1
+R2
+R3
+R38
+!i122 391
+l39
+L23 106
+V?gXK27ZFXCZ]bkg?cNBn:0
+!s100 <=JFo3A;L8Pzg=mD>@GM32
+R7
+32
+R24
+!i10b 1
+R25
+R45
+R46
+!i113 1
+R12
+R13
+Emips_cpu
+Z49 w1745086208
+R1
+R2
+R3
+!i122 392
+R4
+Z50 8E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd
+Z51 FE:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd
+l0
+L6 1
+VMz:]7C1VmXQRXT5]LlX2C3
+!s100 RTJ:mC8I_BBj[=:A`<PEL1
+R7
+32
+R24
+!i10b 1
+R25
+Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd|
+Z53 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd|
+!i113 1
+R12
+R13
+Astruct
+R28
+R41
+R1
+R2
+R3
+Z54 DEx4 work 8 mips_cpu 0 22 Mz:]7C1VmXQRXT5]LlX2C3
+!i122 392
+l42
+L20 78
+V:A23[ME@IVIcUQd[<PXT]1
+!s100 N94keXUMm@aV3:B7YI4hk0
+R7
+32
+R24
+!i10b 1
+R25
+R52
+R53
+!i113 1
+R12
+R13
+Emips_cpu_tb
+Z55 w1745115274
+R1
+R2
+R3
+!i122 405
+R4
+Z56 8E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu_tb.vhd
+Z57 FE:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu_tb.vhd
+l0
+L5 1
+VQa[`>2jYaXkLV;>DK?[E[3
+!s100 cFE0;6PdV_4C[:lzAM7:E1
+R7
+32
+Z58 !s110 1745115282
+!i10b 1
+Z59 !s108 1745115281.000000
+Z60 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu_tb.vhd|
+Z61 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu_tb.vhd|
+!i113 1
+R12
+R13
+Atb
+R54
+R1
+R2
+R3
+Z62 DEx4 work 11 mips_cpu_tb 0 22 Qa[`>2jYaXkLV;>DK?[E[3
+!i122 405
+l19
+Z63 L8 49
+V=5BiGD9OBHZ4V^PVBVF:Q3
+!s100 i<QJ2Oz2CT5Yn`WIlG6z`1
+R7
+32
+R58
+!i10b 1
+R59
+R60
+R61
+!i113 1
+R12
+R13
+Emux2x1
+Z64 w1745016762
+R1
+R2
+R3
+!i122 394
+R4
+Z65 8E:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd
+Z66 FE:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd
+l0
+L5 1
+VbR<gK=UBHI_bMBHHJ3kUb1
+!s100 dlV?@LBE3jc[M[dz;NZ?k3
+R7
+32
+Z67 !s110 1745111028
+!i10b 1
+R25
+Z68 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd|
+Z69 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R39
+!i122 394
+l20
+L19 8
+V2o^JD:X8o2m<Z;iR?_m:d3
+!s100 L>dKZdJNEO<hb_h@B5ZJb3
+R7
+32
+R67
+!i10b 1
+R25
+R68
+R69
+!i113 1
+R12
+R13
+Emux3x1
+Z70 w1745016817
+R1
+R2
+R3
+!i122 395
+R4
+Z71 8E:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd
+Z72 FE:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd
+l0
+L5 1
+V2cWCc8GeZFmOPI@BEmhhg3
+!s100 NeAg];gG7l4gXi;VYnS<I0
+R7
+32
+R67
+!i10b 1
+Z73 !s108 1745111028.000000
+Z74 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd|
+Z75 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R36
+!i122 395
+l21
+L20 9
+VXj=B]<m2Tdim]mO7<njZE3
+!s100 P9AO@GS:T4K^<A>USiUe10
+R7
+32
+R67
+!i10b 1
+R73
+R74
+R75
+!i113 1
+R12
+R13
+Emux4x1
+Z76 w1745016847
+R1
+R2
+R3
+!i122 396
+R4
+Z77 8E:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd
+Z78 FE:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd
+l0
+L5 1
+Vk>B^o5L0b^lV74JK_i4Y]2
+!s100 ;oB`d?knfgWJUM91=2eZ]0
+R7
+32
+Z79 !s110 1745111029
+!i10b 1
+Z80 !s108 1745111029.000000
+Z81 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd|
+Z82 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R34
+!i122 396
+l22
+L21 10
+VbR<goX<L0]k9Y2Ak;_NUY1
+!s100 Phm_Se:nLa6V6_SazXUHm0
+R7
+32
+R79
+!i10b 1
+R80
+R81
+R82
+!i113 1
+R12
+R13
+Eram
+Z83 w1745111715
+R47
+R2
+R3
+!i122 404
+R4
+Z84 8E:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd
+Z85 FE:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd
+l0
+L43 1
+VU??GgDJKoW:>e<L1TiS<^1
+!s100 T8PJ1fajcAF?KZ39ebk;80
+R7
+32
+Z86 !s110 1745111719
+!i10b 1
+Z87 !s108 1745111719.000000
+Z88 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd|
+Z89 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd|
+!i113 1
+R12
+R13
+Asyn
+R47
+R2
+R3
+R48
+!i122 404
+l59
+L55 36
+V1_Sc=Yd:HARJd?oc7LWa`3
+!s100 bYb67?MI>FenCck<S^j0O2
+R7
+32
+R86
+!i10b 1
+R87
+R88
+R89
+!i113 1
+R12
+R13
+Ereg
+Z90 w1745014794
+R1
+R2
+R3
+!i122 398
+R4
+Z91 8E:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd
+Z92 FE:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd
+l0
+L6 1
+V8SNH=i;GM[BSDUNkB@ch`1
+!s100 [R91MHH7I5k=lUOG=E4^62
+R7
+32
+Z93 !s110 1745111031
+!i10b 1
+Z94 !s108 1745111031.000000
+Z95 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd|
+Z96 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R40
+!i122 398
+l23
+L21 18
+V8;DW5k30ESQV1UfB[:>FB3
+!s100 ^LVbzYNN6nz6RCdfMo5`>1
+R7
+32
+R93
+!i10b 1
+R94
+R95
+R96
+!i113 1
+R12
+R13
+Eregister_file
+Z97 w1745016636
+R1
+R2
+R3
+!i122 399
+R4
+Z98 8E:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd
+Z99 FE:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd
+l0
+L8 1
+VIBSbXJ@UfK;@`Nz]I`Y>00
+!s100 >b^U`R<g2anLj0URda`>93
+R7
+32
+Z100 !s110 1745111032
+!i10b 1
+Z101 !s108 1745111032.000000
+Z102 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd|
+Z103 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R37
+!i122 399
+l31
+L24 39
+V=6Vgg[<CTzEOMP_BWgbXK2
+!s100 :e4fWhFknb_gAcQ2z8XX;0
+R7
+32
+R100
+!i10b 1
+R101
+R102
+R103
+!i113 1
+R12
+R13
+Esign_extend
+Z104 w1745076330
+R1
+R2
+R3
+!i122 400
+R4
+Z105 8E:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd
+Z106 FE:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd
+l0
+L6 1
+V_4hR<g[[D;n41MP;YiLaG1
+!s100 a;`A71cUgEE`KI5X96gVM3
+R7
+32
+R100
+!i10b 1
+R101
+Z107 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd|
+Z108 !s107 E:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd|
+!i113 1
+R12
+R13
+Abhv
+R1
+R2
+R3
+R35
+!i122 400
+l18
+L16 16
+V^37JFiB4^7@>z;][F49h@1
+!s100 0Hbn5YeoHnJ`<YNeOIW1k0
+R7
+32
+R100
+!i10b 1
+R101
+R107
+R108
+!i113 1
+R12
+R13

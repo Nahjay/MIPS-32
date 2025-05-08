@@ -1,0 +1,133 @@
+E:/Documents/School/EEL4712C/mips_project/vhdl/controller.vhd {1 {vcom -work work -2002 -explicit -stats=none {E:\Documents\School\EEL4712C\mips_project\vhdl\controller.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity controller
+-- Compiling architecture bhv of controller
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/datapath.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity datapath
+-- Compiling architecture struct of datapath
+-- Loading entity reg
+-- Loading entity mux2x1
+-- Loading entity memory
+-- Loading entity register_file
+-- Loading entity mux3x1
+-- Loading entity alu_ctrl
+-- Loading entity sign_extend
+-- Loading entity mux4x1
+-- Loading entity alu
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/memory.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity memory
+-- Compiling architecture struct of memory
+-- Loading package altera_mf_components
+-- Loading entity ram
+-- Loading entity mux3x1
+-- Loading entity reg
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/alu.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity alu
+-- Compiling architecture bhv of alu
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/register_file.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity register_file
+-- Compiling architecture bhv of register_file
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/mux2x1.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity mux2x1
+-- Compiling architecture bhv of mux2x1
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/alu_ctrl.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity alu_ctrl
+-- Compiling architecture bhv of alu_ctrl
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/mux3x1.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity mux3x1
+-- Compiling architecture bhv of mux3x1
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity reg
+-- Compiling architecture bhv of reg
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/mux4x1.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity mux4x1
+-- Compiling architecture bhv of mux4x1
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/ram.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package altera_mf_components
+-- Compiling entity ram
+-- Compiling architecture SYN of ram
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/sign_extend.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity sign_extend
+-- Compiling architecture bhv of sign_extend
+
+} {} {}} E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd {1 {vcom -work work -2002 -explicit -stats=none E:/Documents/School/EEL4712C/mips_project/vhdl/mips_cpu.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity mips_cpu
+-- Compiling architecture struct of mips_cpu
+-- Loading entity datapath
+-- Loading entity controller
+
+} {} {}}

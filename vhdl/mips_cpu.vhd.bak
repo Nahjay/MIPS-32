@@ -1,0 +1,96 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- entity def
+entity mips_cpu is 
+    -- port interface
+	port (
+		clk : in std_logic;
+		rst : in std_logic;
+		inport0 : in std_logic_vector(31 downto 0); 
+		inport1 : in std_logic_vector(31 downto 0);
+		inport0_en : in std_logic;
+		inport1_en : in std_logic;
+		outport : out std_logic_vector(31 downto 0)
+	);
+end mips_cpu;
+
+-- architectureal implementation
+architecture struct of mips_cpu is
+    -- Define signals for interconnect
+    signal ir_31 : std_logic_vector(5 downto 0);
+    signal ir_20 : std_logic_vector(4 downto 0);
+    signal ir_15 : std_logic_vector(15 downto 0);
+    signal pcwritecond : std_logic;
+    signal pcwrite : std_logic;
+    signal iord : std_logic;
+    signal memwrite : std_logic;
+    signal memtoreg : std_logic;
+    signal irwrite : std_logic;
+    signal jumpandlink : std_logic;
+    signal is_signed : std_logic;
+    signal pcsource : std_logic_vector(1 downto 0);
+    signal alu_opcode : std_logic_vector(5 downto 0);
+    signal alusrc_a : std_logic;
+    signal alusrc_b : std_logic_vector(1 downto 0);
+    signal regwrite : std_logic;
+    signal regdst : std_logic;
+    signal multiplied : std_logic;
+
+  
+begin
+    -- Instantiate Datapath
+    datapath_inst : entity work.datapath
+        port map (
+            clk => clk,
+            rst => rst,
+            pcwritecond => pcwritecond,
+            pcwrite => pcwrite,
+            iord => iord,
+            memwrite => memwrite,
+            alusrc_a => alusrc_a,
+            alusrc_b => alusrc_b,
+            regwrite => regwrite,
+            regdst => regdst,
+            memtoreg => memtoreg,
+            alu_opcode => alu_opcode,
+            inport0_en => inport0_en,
+            irwrite => irwrite,
+            jumpandlink => jumpandlink,
+            is_signed => is_signed,
+            pcsource => pcsource,
+            inport1_en => inport1_en,
+            inport0 => inport0,
+            inport1 => inport1,
+            outport => outport,
+            ir_31 => ir_31,
+            ir_20 => ir_20,
+            ir_15 => ir_15
+        );
+
+    -- Instantiate Controller
+    controller_inst : entity work.controller
+        port map (
+            clk => clk,
+            rst => rst,
+            ir_31 => ir_31,
+            ir_20 => ir_20,
+            ir_15 => ir_15,
+            multiplied => multiplied,
+            pcwritecond => pcwritecond,
+            pcwrite => pcwrite,
+            iord => iord,
+            memwrite => memwrite,
+            memtoreg => memtoreg,
+            irwrite => irwrite,
+            jumpandlink => jumpandlink,
+            is_signed => is_signed,
+            pcsource => pcsource,
+            alu_opcode => alu_opcode,
+            alusrc_a => alusrc_a,
+            alusrc_b => alusrc_b,
+            regwrite => regwrite,
+            regdst => regdst
+        );
+end struct ;

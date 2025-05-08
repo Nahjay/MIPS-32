@@ -1,0 +1,217 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+
+-- entity def
+entity alu is
+    -- port interface 
+    port (
+        alu_a : in std_logic_vector(31 downto 0);
+        alu_b : in std_logic_vector(31 downto 0);
+        op_sel : in std_logic_vector(5 downto 0);
+        shamt : in std_logic_vector(4 downto 0);
+        branch_taken : out std_logic;
+        result : out std_logic_vector(31 downto 0);
+        result_high : out std_logic_vector(31 downto 0)
+    );
+
+end alu;
+
+
+-- =========================[ MIPS Function Code Table ]=========================
+
+    -- ADD     : X"21", "100001"
+    -- SUB     : X"23", "100011"
+    -- MULT    : X"18", "011000"
+    -- MULTU   : X"19", "011001"
+    -- AND     : X"24", "100100"
+    -- OR      : X"25", "100101"
+    -- XOR     : X"26", "100110"
+    -- SLL     : X"00", "000000"
+    -- SRL     : X"02", "000010"
+    -- SRA     : X"03", "000011"
+    -- SLT     : X"2A", "101010"
+    -- SLTU    : X"2B", "101011"
+    -- MFHI    : X"10", "010000"
+    -- MFLO    : X"12", "010010"
+    -- JR      : X"08", "001000"
+    -- BEQ     : X"04", "000100"
+    -- BNE     : X"05", "000101"
+    -- BLEZ    : X"06", "000110"
+    -- BGTZ    : X"07", "000111"
+    -- BLTZ    : X"01", "000001" 
+    -- BGEZ    : X"0F", "001111" 
+    -- J       : X"02", "000010"
+
+
+-- Architectural Implementation
+architecture bhv of alu is
+    -- Define constants for ease of use fr
+
+    -- R-Type Instructions (funct field - 6 bits)
+    constant ADD    : std_logic_vector(5 downto 0) := "100001"; -- X"21"
+    constant SUB    : std_logic_vector(5 downto 0) := "100011"; -- X"23"
+    constant MULT   : std_logic_vector(5 downto 0) := "011000"; -- X"18"
+    constant MULTU  : std_logic_vector(5 downto 0) := "011001"; -- X"19"
+    constant AND_OP : std_logic_vector(5 downto 0) := "100100"; -- X"24"
+    constant OR_OP  : std_logic_vector(5 downto 0) := "100101"; -- X"25"
+    constant XOR_OP : std_logic_vector(5 downto 0) := "100110"; -- X"26"
+    constant SLL_OP    : std_logic_vector(5 downto 0) := "000000"; -- X"00"
+    constant SRL_OP    : std_logic_vector(5 downto 0) := "000010"; -- X"02"
+    constant SRA_OP    : std_logic_vector(5 downto 0) := "000011"; -- X"03"
+    constant SLTS    : std_logic_vector(5 downto 0) := "101010"; -- X"2A"
+    constant SLTU   : std_logic_vector(5 downto 0) := "101011"; -- X"2B"
+    constant MFHI   : std_logic_vector(5 downto 0) := "010000"; -- X"10"
+    constant MFLO   : std_logic_vector(5 downto 0) := "010010"; -- X"12"
+    constant JR     : std_logic_vector(5 downto 0) := "001000"; -- X"08"
+    constant BEQ    : std_logic_vector(5 downto 0) := "000100"; -- X"04"
+    constant BNE    : std_logic_vector(5 downto 0) := "000101"; -- X"05"
+    constant BLEZ   : std_logic_vector(5 downto 0) := "000110"; -- X"06"
+    constant BGTZ   : std_logic_vector(5 downto 0) := "000111"; -- X"07"
+    constant BLTZ   : std_logic_vector(5 downto 0) := "000001"; -- X"01"
+    constant BGEZ   : std_logic_vector(5 downto 0) := "001111"; -- X"0F"  -- custom opcode to simplify alu ctrl logic
+
+    -- Define Signals used in ALU
+
+    -- Unsigned version of inputs
+    signal unsigned_a : unsigned(31 downto 0);
+    signal unsigned_b : unsigned(31 downto 0);
+
+    -- Signed version of inputs
+    signal signed_a : signed(31 downto 0);
+    signal signed_b : signed(31 downto 0);
+
+    -- Multiplication Internal signals
+    signal mult_unsigned : unsigned(63 downto 0);
+    signal mult_signed : signed(63 downto 0);
+
+    -- Unsigned signal to hold the shamt taken from field 10-6 of da instruction
+    signal u_shamt : unsigned(4 downto 0);
+	 -- Integer signal to hold shamt value used in shift functions from numeric library
+    signal int_shamt : integer;
+
+
+
+    begin
+        -- Assign the values for the signed and unsigned signals
+        unsigned_a <= unsigned(alu_a);
+        unsigned_b <= unsigned(alu_b);
+        signed_a <= signed(alu_a);
+        signed_b <= signed(alu_b);
+		  
+        -- Convert shamt to unsigned
+        u_shamt <= unsigned(shamt);
+
+        -- Convert the shamt to an integer
+        int_shamt <= to_integer(u_shamt);
+
+        -- Begin Process
+        process(alu_a, alu_b, shamt, op_sel)
+            begin
+                 -- Default Assignments to prevent latches and hold default values
+                result <= (others => '0');
+                result_high <= (others => '0');
+                branch_taken <= '0';
+                mult_signed <= (others => '0');
+                mult_unsigned <= (others => '0');
+
+                -- Case statement
+                case op_sel is
+                    when ADD =>
+                        -- ADD Unsigned operation
+                        result <= std_logic_vector(unsigned_a + unsigned_b);
+                    when SUB =>
+                        -- Sub unsigned operation
+                        result <= std_logic_vector(unsigned_a - unsigned_b);
+                    when MULT =>
+                         -- Mult Signed operation
+                        mult_signed <= (signed_a * signed_b);
+                        -- Assign results
+                        result <= std_logic_vector(mult_signed(31 downto 0));
+                        result_high <= std_logic_vector(mult_signed(63 downto 32));
+                    when MULTU =>
+                        -- Mult unsigned operation
+                        mult_unsigned <= unsigned_a * unsigned_b;
+                        -- Assign results
+                        result <= std_logic_vector(mult_unsigned(31 downto 0));
+                        result_high <= std_logic_vector(mult_unsigned(63 downto 32));
+                    when AND_OP =>
+                         -- AND operation
+                        result <= (alu_a and alu_b);
+                    when OR_OP =>
+                        -- OR operation
+                        result <= (alu_a or alu_b);
+                    when XOR_OP =>
+                        -- XOR operation
+                        result <= (alu_a xor alu_b);
+                    when SRL_OP =>
+                        -- SRL operation using shamt
+                        result <= std_logic_vector(shift_right(unsigned_b, int_shamt));
+                    when SLL_OP =>
+                        -- SLL operation using shamt
+                        result <= std_logic_vector(shift_left(unsigned_b, int_shamt));
+                    when SRA_OP =>
+                        -- SRA operation using shamt (perserves sign bit)
+                        result <= std_logic_vector(shift_right(signed_b, int_shamt));
+                    when SLTS =>
+                        -- SLT operation (If A < B set true)
+                        if (signed_a < signed_b) then
+                            result <= "00000000000000000000000000000001";
+                        else
+                            result <= "00000000000000000000000000000000";
+                        end if;
+                    when SLTU =>
+                        -- SLT operation (unsigned comparison)
+                        if (unsigned_a < unsigned_b) then
+                            result <= "00000000000000000000000000000001";
+                        else
+                            result <= "00000000000000000000000000000000";
+                        end if;
+                    when MFHI =>
+                        -- set result low, bypassing alu result
+                        result <= (others => '0');
+                    when MFLO =>
+                        -- set result low, bypassing alu result
+                        result <= (others => '0');
+                    when JR =>
+                        -- Set jump addr
+                        result <= alu_a;
+                    when BEQ =>
+                        if unsigned_a = unsigned_b then
+                            branch_taken <= '1';
+                        else
+                            branch_taken <= '0';
+                        end if;
+                    when BNE =>
+                        if unsigned_a /= unsigned_b then
+                            branch_taken <= '1';
+                        else
+                            branch_taken <= '0';
+                        end if;
+                    when BLEZ =>
+                        if (signed_a <= 0) then
+                            branch_taken <= '1';
+                        else
+                            branch_taken <= '0';
+                        end if;
+                    when BLTZ => 
+                        if (signed_a < 0) then
+                            branch_taken <= '1';
+                        else
+                            branch_taken <= '0';
+                        end if;
+                    when BGEZ =>
+                        if (signed_a >= 0) then
+                            branch_taken <= '1';
+                        else
+                            branch_taken <= '0';
+                        end if;
+                    when others =>
+                        -- Reiterate defautls
+                        result <= (others => '0');
+                        result_high <= (others => '0');
+                        branch_taken <= '0';
+                end case;
+        end process;
+end bhv;
