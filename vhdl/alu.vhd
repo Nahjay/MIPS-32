@@ -54,6 +54,8 @@ architecture bhv of alu is
     constant SUB    : std_logic_vector(5 downto 0) := "100011"; -- X"23"
     constant MULT   : std_logic_vector(5 downto 0) := "011000"; -- X"18"
     constant MULTU  : std_logic_vector(5 downto 0) := "011001"; -- X"19"
+    constant DIV    : std_logic_vector(5 downto 0) := "011010"; -- X"1A"
+    constant DIVU   : std_logic_vector(5 downto 0) := "011011"; -- X"1B"
     constant AND_OP : std_logic_vector(5 downto 0) := "100100"; -- X"24"
     constant OR_OP  : std_logic_vector(5 downto 0) := "100101"; -- X"25"
     constant XOR_OP : std_logic_vector(5 downto 0) := "100110"; -- X"26"
